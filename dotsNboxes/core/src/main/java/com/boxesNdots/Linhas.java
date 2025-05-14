@@ -1,6 +1,5 @@
 package com.boxesNdots;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -8,29 +7,21 @@ public class Linhas {
     private float[][] posX;
     private float[][] posY;
     private int tamanho;
-
     private boolean[][] linhasH;
     private boolean[][] linhasV;
-
     private int[][] donoLinhasH;
     private int[][] donoLinhasV;
-
-
     private int[][] quadradosJogador; 
     private int jogadorAtual = 2;    
-
 
     public Linhas(float[][] posX, float[][] posY, int tamanho) {
         this.posX = posX;
         this.posY = posY;
         this.tamanho = tamanho;
-
         linhasH = new boolean[tamanho][tamanho - 1];
         linhasV = new boolean[tamanho - 1][tamanho];
-
         donoLinhasH = new int[tamanho][tamanho - 1];
         donoLinhasV = new int[tamanho - 1][tamanho];
-
         quadradosJogador = new int[tamanho - 1][tamanho - 1];
     }
 
@@ -109,7 +100,6 @@ public class Linhas {
                     float y1 = posY[i][j];
                     float x2 = posX[i + 1][j + 1];
                     float y2 = posY[i + 1][j + 1];
-
                     float centroX = (x1 + x2) / 2;
                     float centroY = (y1 + y2) / 2;
                     if (dono == 1) {
@@ -127,10 +117,8 @@ public class Linhas {
 
     private boolean mouseSobreLinha (float mouseX, float mouseY, float x1, float y1, float x2, float y2) {
         float margem = 8.f;
-
         float dx = x2 - x1;
         float dy = y2 - y1;
-
         float comprimento2 = dx * dx + dy * dy;
         if (comprimento2 == 0) {
             return false;
@@ -143,7 +131,6 @@ public class Linhas {
 
         float projX = x1 + t * dx;
         float projY = y1 + t * dy;
-
         float dist2 = (mouseX - projX) * (mouseX - projX) + (mouseY - projY) * (mouseY - projY);
         return dist2 <= margem * margem;
     }
