@@ -1,79 +1,55 @@
 package com.boxesNdots;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SimpleMenuScreen implements Screen {
 
     private BoxesAndDots game;
-    private Stage stage;
-    private Skin skin;
+    private SpriteBatch batch;
+    private BitmapFont font;
 
     public SimpleMenuScreen(BoxesAndDots game) {
         this.game = game;
-        stage = new Stage(new ScreenViewport());
-
-        Gdx.input.setInputProcessor(stage);
-
-        skin = new Skin(Gdx.files.internal("uiskin.json")); 
-
-        Label title = new Label("Dots and Boxes", skin);
-
-        TextButton playButton = new TextButton("Jogar", skin);
-        playButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(game)); 
-            }
-        });
-
-        Table table = new Table();
-        table.setFillParent(true);
-        table.center();
-        table.add(title).padBottom(50).row();
-        table.add(playButton).width(200).height(60);
-
-        stage.addActor(table);
+        batch = new SpriteBatch();
+        font = new BitmapFont(); 
     }
 
     @Override
-    public void show() { }
+    public void show() {
+    }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.5f, 0.7f, 0.9f, 1);
+        Gdx.gl.glClearColor(1f, 0.85f, 0.9f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stage.act();
-        stage.draw();
+        batch.begin();
+        font.draw(batch, "Dots and Boxes", 300, 600);
+        font.draw(batch, "Pressione ESPAÇO para jogar", 280, 500);
+        batch.end();
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            // Quando aperta espaço, troca para a tela do jogo
+            game.setScreen(new GameScreen(game));
+        }
     }
 
     @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
-    }
-
+    public void resize(int width, int height) { }
     @Override
     public void pause() { }
-
     @Override
     public void resume() { }
-
     @Override
     public void hide() { }
-
     @Override
     public void dispose() {
-        stage.dispose();
-        skin.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }
