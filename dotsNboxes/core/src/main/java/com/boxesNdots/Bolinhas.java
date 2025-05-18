@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Bolinhas {
     private static final int tabuleiro = 6;
-    private static final float espacamento = 110;
+    private static final float espacamento = 100;
     private static final float tamanhoBolinha = 10;
 
     private float[][] posicoesX;
@@ -14,8 +14,8 @@ public class Bolinhas {
         posicoesX = new float[tabuleiro][tabuleiro];
         posicoesY = new float[tabuleiro][tabuleiro];
 
-        float offsetX = (820 - (tabuleiro - 1) * espacamento) / 2;
-        float offsetY = (820 - (tabuleiro - 1) * espacamento) / 2;
+        float offsetX = (800 - (tabuleiro - 1) * espacamento) / 2;
+        float offsetY = (650 - (tabuleiro - 1) * espacamento) / 2;
 
         for (int i = 0; i < tabuleiro; i++) {
             for (int j = 0; j  < tabuleiro; j ++) {
