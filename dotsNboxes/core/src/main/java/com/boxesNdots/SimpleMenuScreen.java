@@ -1,6 +1,7 @@
 package com.boxesNdots;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SimpleMenuScreen implements Screen {
-
+    private Music musicaMenu;
     private BoxesAndDots game;
     private SpriteBatch batch;
     private BitmapFont font;
@@ -16,11 +17,15 @@ public class SimpleMenuScreen implements Screen {
     public SimpleMenuScreen(BoxesAndDots game) {
         this.game = game;
         batch = new SpriteBatch();
-        font = new BitmapFont(); 
+        font = new BitmapFont();
     }
 
     @Override
     public void show() {
+        musicaMenu = Gdx.audio.newMusic(Gdx.files.internal("lonely-wolf-goodbye-little-dog-335439.mp3"));
+        musicaMenu.play();
+        musicaMenu.setVolume(0.5f);
+        musicaMenu.setLooping(true);
     }
 
     @Override
@@ -40,16 +45,28 @@ public class SimpleMenuScreen implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) { }
+    public void resize(int width, int height) {
+    }
+
     @Override
-    public void pause() { }
+    public void pause() {
+    }
+
     @Override
-    public void resume() { }
+    public void resume() {
+    }
+
     @Override
-    public void hide() { }
+    public void hide() {
+        if (musicaMenu != null) {
+            musicaMenu.stop();
+        }
+    }
+
     @Override
     public void dispose() {
         batch.dispose();
         font.dispose();
+        musicaMenu.dispose();
     }
 }
