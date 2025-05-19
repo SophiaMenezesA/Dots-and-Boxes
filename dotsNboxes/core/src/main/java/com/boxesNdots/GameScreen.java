@@ -1,12 +1,14 @@
 package com.boxesNdots;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class GameScreen implements Screen {
-
+    private Music musicaJogo;
     private BoxesAndDots game;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
@@ -26,6 +28,10 @@ public class GameScreen implements Screen {
         bolinhas = new Bolinhas();
         linhas = new Linhas(bolinhas.getPosicoesX(), bolinhas.getPosicoesY(), bolinhas.getTamanho());
         cliques = new Cliques(linhas.getPosX(), linhas.getPosY(), linhas.getTamanho());
+        musicaJogo = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        musicaJogo.play();
+        musicaJogo.setVolume(0.5f);
+        musicaJogo.setLooping(true);
     }
 
     @Override
@@ -42,13 +48,29 @@ public class GameScreen implements Screen {
         batch.end();
     }
 
-    @Override public void resize(int width, int height) {}
-    @Override public void pause() {}
-    @Override public void resume() {}
-    @Override public void hide() {}
+    @Override
+    public void resize(int width, int height) {
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void hide() {
+        if (musicaJogo != null) {
+            musicaJogo.stop();
+        }
+    }
+
     @Override
     public void dispose() {
         batch.dispose();
         shapeRenderer.dispose();
+        musicaJogo.dispose();
     }
 }
