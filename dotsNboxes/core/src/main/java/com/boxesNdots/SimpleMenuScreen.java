@@ -1,23 +1,24 @@
 package com.boxesNdots;
 
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SimpleMenuScreen implements Screen {
     private Music musicaMenu;
-    private BoxesAndDots game;
-    private SpriteBatch batch;
-    private BitmapFont font;
+    private final BoxesAndDots game;
+    private final SpriteBatch batch;
+    private final BitmapFont font;
 
     public SimpleMenuScreen(BoxesAndDots game) {
         this.game = game;
         batch = new SpriteBatch();
         font = new BitmapFont();
+        font.getData().setScale(2f);
     }
 
     @Override
@@ -34,8 +35,8 @@ public class SimpleMenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        font.draw(batch, "Dots and Boxes", 300, 600);
-        font.draw(batch, "Pressione ESPAÇO para jogar", 280, 500);
+        font.draw(batch, "Dots and Boxes", 400, 325);
+        font.draw(batch, "Pressione ESPAÇO para jogar", 400, 350);
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {

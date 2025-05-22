@@ -3,9 +3,9 @@ package com.boxesNdots;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Linhas {
-    private float[][] posX;
-    private float[][] posY;
-    private int tamanho;
+    private final float[][] posX;
+    private final float[][] posY;
+    private final int tamanho;
 
     public Linhas(float[][] posX, float[][] posY, int tamanho) {
         this.posX = posX;
@@ -24,13 +24,13 @@ public class Linhas {
                 if (j < tamanho - 1) {
                     float x2 = posX[i][j + 1];
                     float y2 = posY[i][j + 1];
-                    shapeRenderer.rectLine(x1, y1, x2, y2, 5);
+                    shapeRenderer.rectLine(x1, y1, x2, y2, 3);
                 }
 
                 if (i < tamanho - 1) {
                     float x2 = posX[i + 1][j];
                     float y2 = posY[i + 1][j];
-                    shapeRenderer.rectLine(x1, y1, x2, y2, 5);
+                    shapeRenderer.rectLine(x1, y1, x2, y2, 3);
                 }
             }
         }

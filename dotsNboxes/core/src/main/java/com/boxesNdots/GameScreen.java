@@ -27,7 +27,8 @@ public class GameScreen implements Screen {
         shapeRenderer = new ShapeRenderer();
         bolinhas = new Bolinhas();
         linhas = new Linhas(bolinhas.getPosicoesX(), bolinhas.getPosicoesY(), bolinhas.getTamanho());
-        cliques = new Cliques(linhas.getPosX(), linhas.getPosY(), linhas.getTamanho());
+        GerenciaVezDoJogador gerenciaVez = new GerenciaVezDoJogador(2);
+        cliques = new Cliques(linhas.getPosX(), linhas.getPosY(), linhas.getTamanho(), gerenciaVez);
         musicaJogo = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         musicaJogo.play();
         musicaJogo.setVolume(0.5f);

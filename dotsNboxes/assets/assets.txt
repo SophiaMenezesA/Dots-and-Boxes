@@ -1,1 +1,13 @@
+Fonts/OFL.txt
+Fonts/PoetsenOne-Regular.bmp
+Fonts/PoetsenOne-Regular.fnt
+Fonts/PoetsenOne-Regular.png
+Fonts/PoetsenOne-Regular.ttf
+default.fnt
+default.png
 icon.png
+lonely-wolf-goodbye-little-dog-335439.mp3
+music.mp3
+uiskin.atlas
+uiskin.json
+uiskin.png
