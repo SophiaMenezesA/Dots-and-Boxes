@@ -3,6 +3,8 @@ package com.boxesNdots;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -16,6 +18,7 @@ public class GameScreen implements Screen {
     private Bolinhas bolinhas;
     private Linhas linhas;
     private Cliques cliques;
+    private BitmapFont fonte;
 
     public GameScreen(BoxesAndDots game) {
         this.game = game;
@@ -24,11 +27,12 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
+        fonte = new BitmapFont();
         shapeRenderer = new ShapeRenderer();
         bolinhas = new Bolinhas();
         linhas = new Linhas(bolinhas.getPosicoesX(), bolinhas.getPosicoesY(), bolinhas.getTamanho());
         GerenciaVezDoJogador gerenciaVez = new GerenciaVezDoJogador(2);
-        cliques = new Cliques(linhas.getPosX(), linhas.getPosY(), linhas.getTamanho(), gerenciaVez);
+        cliques = new Cliques(linhas.getPosX(), linhas.getPosY(), linhas.getTamanho(), gerenciaVez,0,0);
         musicaJogo = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         musicaJogo.play();
         musicaJogo.setVolume(0.5f);
@@ -44,8 +48,11 @@ public class GameScreen implements Screen {
         cliques.render(shapeRenderer);
         bolinhas.render(shapeRenderer);
         shapeRenderer.end();
-
         batch.begin();
+       
+        fonte.draw(batch, "Jogador 1: " + cliques.getPontosJogador1(), 50, 600);
+
+        fonte.draw(batch, "Jogador 2: " + cliques.getPontosJogador2(), 650,600);
         batch.end();
     }
 
@@ -73,5 +80,7 @@ public class GameScreen implements Screen {
         batch.dispose();
         shapeRenderer.dispose();
         musicaJogo.dispose();
+        fonte.dispose();
     }
+    
 }
