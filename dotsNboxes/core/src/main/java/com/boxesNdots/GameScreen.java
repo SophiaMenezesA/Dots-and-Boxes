@@ -3,7 +3,6 @@ package com.boxesNdots;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -13,12 +12,13 @@ public class GameScreen implements Screen {
     private Music musicaJogo;
     private BoxesAndDots game;
     private SpriteBatch batch;
+    private BitmapFont fonte;
     private ShapeRenderer shapeRenderer;
 
     private Bolinhas bolinhas;
     private Linhas linhas;
     private Cliques cliques;
-    private BitmapFont fonte;
+    private GerenciaVezDoJogador gerenciaVez;
 
     public GameScreen(BoxesAndDots game) {
         this.game = game;
@@ -28,11 +28,12 @@ public class GameScreen implements Screen {
     public void show() {
         batch = new SpriteBatch();
         fonte = new BitmapFont();
+        fonte.getData().setScale(1.5f);
         shapeRenderer = new ShapeRenderer();
         bolinhas = new Bolinhas();
         linhas = new Linhas(bolinhas.getPosicoesX(), bolinhas.getPosicoesY(), bolinhas.getTamanho());
-        GerenciaVezDoJogador gerenciaVez = new GerenciaVezDoJogador(2);
-        cliques = new Cliques(linhas.getPosX(), linhas.getPosY(), linhas.getTamanho(), gerenciaVez,0,0);
+        gerenciaVez = new GerenciaVezDoJogador(2);
+        cliques = new Cliques(linhas.getPosX(), linhas.getPosY(), linhas.getTamanho(), gerenciaVez);
         musicaJogo = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         musicaJogo.play();
         musicaJogo.setVolume(0.5f);
@@ -49,10 +50,10 @@ public class GameScreen implements Screen {
         bolinhas.render(shapeRenderer);
         shapeRenderer.end();
         batch.begin();
-       
-        fonte.draw(batch, "Jogador 1: " + cliques.getPontosJogador1(), 50, 600);
-
-        fonte.draw(batch, "Jogador 2: " + cliques.getPontosJogador2(), 650,600);
+        int pontosJogador1 = gerenciaVez.getPontuacao(1);
+        int pontosJogador2 = gerenciaVez.getPontuacao(2);
+        fonte.draw(batch, "Jogador 1: " + pontosJogador1, 40, 630);
+        fonte.draw(batch, "Jogador 2: " + pontosJogador2, 640, 630);
         batch.end();
     }
 
@@ -78,9 +79,9 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
+        fonte.dispose();
         shapeRenderer.dispose();
         musicaJogo.dispose();
-        fonte.dispose();
     }
     
 }
