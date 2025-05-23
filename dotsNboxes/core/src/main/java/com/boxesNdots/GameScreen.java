@@ -49,6 +49,7 @@ public class GameScreen implements Screen {
         cliques.render(shapeRenderer);
         bolinhas.render(shapeRenderer);
         shapeRenderer.end();
+        verificarFimDoJogo();
         batch.begin();
         int pontosJogador1 = gerenciaVez.getPontuacao(1);
         int pontosJogador2 = gerenciaVez.getPontuacao(2);
@@ -57,6 +58,20 @@ public class GameScreen implements Screen {
         batch.end();
     }
 
+    private void verificarFimDoJogo() {
+        if (cliques.estaCompleto()) {  
+            int pontosJogador1 = gerenciaVez.getPontuacao(1);
+            int pontosJogador2 = gerenciaVez.getPontuacao(2);
+            int vencedor = 0;
+
+            if (pontosJogador1 > pontosJogador2) {
+                vencedor = 1;
+            } else if (pontosJogador2 > pontosJogador1) {
+                vencedor = 2;
+            }
+            game.setScreen(new GameOverScreen(game, vencedor, pontosJogador1,pontosJogador2));
+        }
+    }
     @Override
     public void resize(int width, int height) {
     }
@@ -83,5 +98,4 @@ public class GameScreen implements Screen {
         shapeRenderer.dispose();
         musicaJogo.dispose();
     }
-    
 }
