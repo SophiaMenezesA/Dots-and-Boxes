@@ -14,23 +14,19 @@ public class Cliques {
     private final int[][] donoLinhasV;
     private final int[][] quadradosJogador;
     private final GerenciaVezDoJogador gerenciaVez;
-    private int pontosJogador1 = 0;
-    private int pontosJogador2 = 0;
 
-    public Cliques(float[][] posX, float[][] posY, int tamanho, GerenciaVezDoJogador gerenciaVez, int pontosJogador1,
-            int pontosJogador2) {
+    public Cliques(float[][] posX, float[][] posY, int tamanho, GerenciaVezDoJogador gerenciaVez) {
         this.posX = posX;
         this.posY = posY;
         this.tamanho = tamanho;
         this.gerenciaVez = gerenciaVez;
-        this.pontosJogador1 = pontosJogador1;
-        this.pontosJogador2 = pontosJogador2;
         linhasH = new boolean[tamanho][tamanho - 1];
         linhasV = new boolean[tamanho - 1][tamanho];
         donoLinhasH = new int[tamanho][tamanho - 1];
         donoLinhasV = new int[tamanho - 1][tamanho];
         quadradosJogador = new int[tamanho - 1][tamanho - 1];
     }
+
 
     public void render(ShapeRenderer shapeRenderer) {
         float mouseX = Gdx.input.getX();
@@ -103,11 +99,7 @@ public class Cliques {
                         linhasV[i][j] && linhasV[i][j + 1]) {
 
                     quadradosJogador[i][j] = gerenciaVez.getJogadorAtual();
-                    if (gerenciaVez.getJogadorAtual() == 1) {
-                        pontosJogador1++;
-                    } else {
-                        pontosJogador2++;
-                    }
+                    
                     gerenciaVez.adicionarPonto(gerenciaVez.getJogadorAtual());
                     fechouQuadradoNestaRodada = true;
                 }
@@ -135,25 +127,17 @@ public class Cliques {
                     if (dono == 1) {
                         shapeRenderer.setColor(0.8f, 0.3f, 0.3f, 1f);
                         shapeRenderer.circle(centroX, centroY, 20);
-
+                        
                     } else if (dono == 2) {
                         shapeRenderer.setColor(0.3f, 0.5f, 0.8f, 1f);
                         shapeRenderer.rectLine(centroX - 10, centroY - 10, centroX + 10, centroY + 10, 4);
                         shapeRenderer.rectLine(centroX - 10, centroY + 10, centroX + 10, centroY - 10, 4);
                     }
                 }
-
+                
             }
         }
-
-    }
-
-    public int getPontosJogador1() {
-        return pontosJogador1;
-    }
-
-    public int getPontosJogador2() {
-        return pontosJogador2;
+    
     }
 
     private boolean mouseSobreLinha(float mouseX, float mouseY, float x1, float y1, float x2, float y2) {
@@ -175,5 +159,6 @@ public class Cliques {
         float dist2 = (mouseX - projX) * (mouseX - projX) + (mouseY - projY) * (mouseY - projY);
         return dist2 <= margem * margem;
     }
+
 
 }
