@@ -35,12 +35,11 @@ public class SimpleMenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        font.draw(batch, "Dots and Boxes", 400, 325);
-        font.draw(batch, "Pressione ESPAÇO para jogar", 400, 350);
+        font.draw(batch, "Dots and Boxes", 300, 500);
+        font.draw(batch, "Pressione ESPAÇO para jogar", 220, 400);
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            // Quando aperta espaço, troca para a tela do jogo
             game.setScreen(new GameScreen(game));
         }
     }
