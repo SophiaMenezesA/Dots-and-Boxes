@@ -15,13 +15,16 @@ public class GameOverScreen implements Screen {
     private int pontosJogador2;
     private SpriteBatch batch;
     private BitmapFont font;
+    private boolean modoBot;
 
-    public GameOverScreen(BoxesAndDots game, int vencedor, int pontosJogador1, int pontosJogador2) {
+    public GameOverScreen(BoxesAndDots game, int vencedor, int pontosJogador1, int pontosJogador2, boolean modoBot) {
         this.game = game;
         this.vencedor = vencedor;
         this.pontosJogador1 = pontosJogador1;
         this.pontosJogador2 = pontosJogador2;
+        this.modoBot = modoBot;
     }
+
 
     @Override
     public void show() {
@@ -52,7 +55,7 @@ public class GameOverScreen implements Screen {
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new GameScreen(game,modoBot));
         }
     }
 
