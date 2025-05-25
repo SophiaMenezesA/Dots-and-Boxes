@@ -55,7 +55,7 @@ public class GameOverScreen implements Screen {
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            game.setScreen(new GameScreen(game,modoBot));
+            game.setScreen(new SimpleMenuScreen(game));
         }
     }
 
