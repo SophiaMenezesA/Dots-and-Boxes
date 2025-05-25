@@ -14,14 +14,16 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private BitmapFont fonte;
     private ShapeRenderer shapeRenderer;
-
+    private BotJogador bot;
     private Bolinhas bolinhas;
     private Linhas linhas;
     private Cliques cliques;
     private GerenciaVezDoJogador gerenciaVez;
+    private boolean modoBot;  
 
-    public GameScreen(BoxesAndDots game) {
+    public GameScreen(BoxesAndDots game, boolean modoBot) {
         this.game = game;
+        this.modoBot = modoBot;
     }
 
     @Override
@@ -34,6 +36,13 @@ public class GameScreen implements Screen {
         linhas = new Linhas(bolinhas.getPosicoesX(), bolinhas.getPosicoesY(), bolinhas.getTamanho());
         gerenciaVez = new GerenciaVezDoJogador(2);
         cliques = new Cliques(linhas.getPosX(), linhas.getPosY(), linhas.getTamanho(), gerenciaVez);
+
+        if (modoBot) {
+            bot = new BotJogador(cliques, gerenciaVez, 2);  
+        } else {
+            bot = null; 
+        }
+
         musicaJogo = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         musicaJogo.play();
         musicaJogo.setVolume(0.5f);
@@ -49,17 +58,23 @@ public class GameScreen implements Screen {
         cliques.render(shapeRenderer);
         bolinhas.render(shapeRenderer);
         shapeRenderer.end();
+
         verificarFimDoJogo();
+
         batch.begin();
         int pontosJogador1 = gerenciaVez.getPontuacao(1);
         int pontosJogador2 = gerenciaVez.getPontuacao(2);
         fonte.draw(batch, "Jogador 1: " + pontosJogador1, 40, 630);
         fonte.draw(batch, "Jogador 2: " + pontosJogador2, 640, 630);
         batch.end();
+
+        if (modoBot && gerenciaVez.getJogadorAtual() == 2) {
+            bot.jogar();
+        }
     }
 
     private void verificarFimDoJogo() {
-        if (cliques.estaCompleto()) {  
+        if (cliques.estaCompleto()) {
             int pontosJogador1 = gerenciaVez.getPontuacao(1);
             int pontosJogador2 = gerenciaVez.getPontuacao(2);
             int vencedor = 0;
@@ -69,20 +84,18 @@ public class GameScreen implements Screen {
             } else if (pontosJogador2 > pontosJogador1) {
                 vencedor = 2;
             }
-            game.setScreen(new GameOverScreen(game, vencedor, pontosJogador1,pontosJogador2));
+            game.setScreen(new GameOverScreen(game, vencedor, pontosJogador1, pontosJogador2, modoBot));
         }
     }
-    @Override
-    public void resize(int width, int height) {
-    }
 
     @Override
-    public void pause() {
-    }
+    public void resize(int width, int height) { }
 
     @Override
-    public void resume() {
-    }
+    public void pause() { }
+
+    @Override
+    public void resume() { }
 
     @Override
     public void hide() {
