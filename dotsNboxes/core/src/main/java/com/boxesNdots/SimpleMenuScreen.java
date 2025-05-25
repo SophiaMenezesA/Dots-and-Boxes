@@ -14,6 +14,9 @@ public class SimpleMenuScreen implements Screen {
     private final SpriteBatch batch;
     private final BitmapFont font;
 
+    private int opcaoSelecionada = 0; 
+    private final String[] opcoes = {"Jogar sozinho", "Jogar com 2 jogadores"};
+
     public SimpleMenuScreen(BoxesAndDots game) {
         this.game = game;
         batch = new SpriteBatch();
@@ -36,11 +39,32 @@ public class SimpleMenuScreen implements Screen {
 
         batch.begin();
         font.draw(batch, "Dots and Boxes", 300, 500);
-        font.draw(batch, "Pressione ESPAÇO para jogar", 220, 400);
+        font.draw(batch, "Use UP/DOWN para escolher e ENTER \n para confirmar", 100, 450);
+
+        for (int i = 0; i < opcoes.length; i++) {
+            if (i == opcaoSelecionada) {
+                font.setColor(1, 0, 0, 1); 
+            } else {
+                font.setColor(0, 0, 0, 1); 
+            }
+            font.draw(batch, opcoes[i], 280, 250 - i * 40);
+        }
+        font.setColor(1, 1, 1, 1); 
         batch.end();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            game.setScreen(new GameScreen(game));
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            opcaoSelecionada--;
+            if (opcaoSelecionada < 0) opcaoSelecionada = opcoes.length - 1;
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+            opcaoSelecionada++;
+            if (opcaoSelecionada >= opcoes.length) opcaoSelecionada = 0;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            boolean jogarContraBot = (opcaoSelecionada == 0);
+            game.setScreen(new GameScreen(game, jogarContraBot));
+            musicaMenu.stop();
+            dispose();
         }
     }
 
@@ -67,6 +91,6 @@ public class SimpleMenuScreen implements Screen {
     public void dispose() {
         batch.dispose();
         font.dispose();
-        musicaMenu.dispose();
+        if (musicaMenu != null) musicaMenu.dispose();
     }
 }
