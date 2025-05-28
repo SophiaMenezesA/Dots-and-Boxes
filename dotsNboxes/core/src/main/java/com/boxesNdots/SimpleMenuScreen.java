@@ -13,6 +13,7 @@ public class SimpleMenuScreen implements Screen {
     private final BoxesAndDots game;
     private final SpriteBatch batch;
     private final BitmapFont font;
+    private final BitmapFont fontGrande;
 
     private int opcaoSelecionada = 0; 
     private final String[] opcoes = {"Jogar sozinho", "Jogar com 2 jogadores"};
@@ -21,6 +22,7 @@ public class SimpleMenuScreen implements Screen {
         this.game = game;
         batch = new SpriteBatch();
         font = new BitmapFont();
+        fontGrande = new BitmapFont();
         font.getData().setScale(2f);
     }
 
@@ -38,18 +40,21 @@ public class SimpleMenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        font.draw(batch, "Dots and Boxes", 300, 500);
-        font.draw(batch, "Use UP/DOWN para escolher e ENTER \n para confirmar", 100, 450);
+        fontGrande.draw(batch, "Dots and Boxes", 250, 600);
+        fontGrande.getData().setScale(3f);
+        font.draw(batch, "Use UP/DOWN para escolher", 220, 450);
+        font.draw(batch, "Enter para jogar", 300, 420);
 
         for (int i = 0; i < opcoes.length; i++) {
             if (i == opcaoSelecionada) {
-                font.setColor(1, 0, 0, 1); 
+                font.setColor(0.541f, 0.169f, 0.886f, 1f); 
             } else {
-                font.setColor(0, 0, 0, 1); 
+                font.setColor(0.360f, 0.102f, 0.419f, 1f); 
             }
             font.draw(batch, opcoes[i], 280, 250 - i * 40);
         }
-        font.setColor(1, 1, 1, 1); 
+        fontGrande.setColor(0.360f, 0.102f, 0.419f, 1f);
+        font.setColor(0.180f, 0.000f, 0.243f, 1f); 
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
